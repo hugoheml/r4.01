@@ -1,0 +1,13 @@
+[workspace]
+
+resolver = "2"
+
+members = [ 
+	"concurrency", "network_services",
+	"options_and_results",
+	"ownership", "port_scanner", "voting_machine",
+	"v020_configuration", "v021_app_builder",
+	"v030_domain", "v040_memory", "v041_file",
+	"v050_use_cases", "v060_text_interfaces",
+	"v070_cli_services"
+]

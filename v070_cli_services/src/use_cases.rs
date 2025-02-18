@@ -1,4 +1,7 @@
+use std::sync::Arc;
+
 use serde::Deserialize;
+use tokio::sync::RwLock;
 
 use crate::{domain::{BallotPaper, Candidate, VoteOutcome, Voter, VotingMachine}, storage::Storage};
 
@@ -19,29 +22,29 @@ impl From<VoteForm> for BallotPaper {
 
 #[derive(Clone)]
 pub struct VotingController<Store> {
-	store: Store
+	store: Arc<RwLock<Store>>
 }
 
 impl<Store: Storage> VotingController<Store> {
 	pub fn new(store: Store) -> Self {
 		Self {
-			store
+			store: Arc::new(RwLock::new(store))
 		}
 	}
 
 	pub async fn vote(&mut self, vote_form: VoteForm) -> anyhow::Result<VoteOutcome> {
-		let mut machine = self.store.get_voting_machine().await?;
+		let mut machine = self.store.read().await.get_voting_machine().await?;
 
 		let ballot_paper = BallotPaper::from(vote_form);
 		let result = machine.vote(ballot_paper);
 
-		self.store.put_working_machine(machine).await?;
+		self.store.write().await.put_working_machine(machine).await?;
 
 		return Ok(result);
 	}
 	
 	pub async fn get_voting_machine(&self) -> anyhow::Result<VotingMachine> {
-		return self.store.get_voting_machine().await;
+		self.store.read().await.get_voting_machine().await
 	}
 }
 

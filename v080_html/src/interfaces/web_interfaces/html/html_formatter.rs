@@ -4,6 +4,7 @@ use crate::{domain::VotingMachine, interfaces::{lexicon::Lexicon, web_interfaces
 
 pub fn vote_form(routes: &WebRoutes, lexicon: &Lexicon) -> Markup {
 	html!{
+        script src="https://unpkg.com/htmx.org@1.9.2" {}
 		h2 { (lexicon.ballot_paper) }
         label for="votant" { (lexicon.voter) }
         input type="text" id="votant" name="votant" required;

@@ -18,4 +18,7 @@ pub struct Lexicon {
 	pub blank_votes: &'static str,
 	pub invalid_votes: &'static str,
 	pub voters: &'static str,
+	pub vote_action: &'static str,
+	pub ballot_paper: &'static str,
+	pub voting_machine: &'static str
 }

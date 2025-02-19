@@ -1,5 +1,5 @@
 use crate::{domain::{AttendenceSheet, Scoreboard, VotingMachine}, storage::Storage, use_cases::{VoteForm, VotingController}};
-use super::lexicon::Lexicon;
+use super::{lexicon::Lexicon, show_vote_outcome};
 
 pub async fn handle_line<Store: Storage>(voting_controller: &mut VotingController<Store>, lexicon: &Lexicon, input: &str) -> anyhow::Result<String> {
     let mut input_args = input.split_whitespace();
@@ -56,23 +56,6 @@ pub async fn handle_line<Store: Storage>(voting_controller: &mut VotingControlle
         }
         Some(_) => {
             return Ok(lexicon.invalid_command.to_string());
-        }
-    }
-}
-
-fn show_vote_outcome(outcome: crate::domain::VoteOutcome, lexicon: &Lexicon) -> String {
-    match outcome {
-        crate::domain::VoteOutcome::AcceptedVote(voter, candidate) => {
-            return format!("{} {} {}", lexicon.vote_of, voter.0, candidate.0);
-        },
-        crate::domain::VoteOutcome::BlankVote(voter) => {
-            return format!("{} {} {}", lexicon.vote_of, voter.0, lexicon.blank_vote);
-        },
-        crate::domain::VoteOutcome::InvalidVote(voter) => {
-            return format!("{} {} {}", lexicon.vote_of, voter.0, lexicon.invalid_vote);
-        },
-        crate::domain::VoteOutcome::HasAlreadyVoted(voter) => {
-            return format!("{} {}", voter.0, lexicon.has_already_voted);
         }
     }
 }

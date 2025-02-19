@@ -3,7 +3,7 @@ use crate::interfaces::lexicon::Lexicon;
 pub const FRENCH_LEXICON: Lexicon = Lexicon {
     blank: "blanc",
     candidate: "candidat",
-    voter: "électeur",
+    voter: "votant",
     choose_something_to_do: "choisissez quelque chose à faire",
     invalid_command: "Commande invalide",
     vote_command_usage: "Vous devez utiliser la commande de la façon suivante : voter <nom> <vote>",
@@ -18,4 +18,7 @@ pub const FRENCH_LEXICON: Lexicon = Lexicon {
     blank_votes: "Votes blancs",
     invalid_votes: "Votes invalides",
     voters: "Votants",
+    vote_action: "Voter",
+    ballot_paper: "Urne",
+    voting_machine: "Machine de vote"
 };

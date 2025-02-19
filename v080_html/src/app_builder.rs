@@ -14,6 +14,7 @@ use crate::service::Service;
 use crate::services::stdio::StdioService;
 use crate::services::tcp::TcpService;
 use crate::services::udp::UdpService;
+use crate::services::web::WebService;
 use crate::storage::Storage;
 use crate::storages::file::FileStore;
 use crate::storages::memory::MemoryStore;
@@ -57,6 +58,9 @@ async fn dispatch_service<Store: Storage + Send + Sync + Clone>(configuration: C
         },
         crate::configuration::ServiceType::Tcp => {
             handle_lines::<FileStore, TcpService<FileStore>>(&configuration).await
+        },
+        crate::configuration::ServiceType::Web => {
+            handle_lines::<FileStore, WebService>(&configuration).await
         }
     }
 }

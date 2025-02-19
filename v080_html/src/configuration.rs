@@ -35,5 +35,6 @@ pub enum LexiconType {
 pub enum ServiceType {
 	Stdio,
 	Udp,
-	Tcp
+	Tcp,
+	Web
 }

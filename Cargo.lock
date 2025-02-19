@@ -563,6 +563,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "v080_html"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "clap",
+ "serde",
+ "serde_json",
+ "tokio",
+]
+
+[[package]]
 name = "voting_machine"
 version = "0.1.0"
 dependencies = [

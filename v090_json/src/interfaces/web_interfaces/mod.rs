@@ -1,4 +1,5 @@
 mod html;
+mod json;
 pub mod router;
 pub mod web_routers;
 

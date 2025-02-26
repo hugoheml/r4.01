@@ -1,6 +1,8 @@
+use std::collections::{BTreeMap, BTreeSet};
+
 use serde::{Deserialize, Serialize};
 
-use crate::{domain::VoteOutcome, use_cases::VoteForm};
+use crate::{domain::{Scoreboard, VoteOutcome, VotingMachine}, use_cases::VoteForm};
 
 #[derive(Deserialize)]
 pub struct VoteFormV1 {
@@ -34,4 +36,36 @@ impl From<VoteOutcome> for VoteOutcomeV1 {
 			VoteOutcome::HasAlreadyVoted(voter) => VoteOutcomeV1::HasAlreadyVoted(voter.0)
 		}
 	}
+}
+
+#[derive(Serialize)]
+struct ScoreboardV1 {
+	scores: BTreeMap<String, usize>,
+	blank_score: usize,
+	invalid_score: usize
+}
+
+impl From<Scoreboard> for ScoreboardV1 {
+	fn from(scoreboard: Scoreboard) -> Self {
+		Self {
+			scores: scoreboard.scores.iter().map(|(k, v)| (k.to_string(), v.0)).collect(),
+			blank_score: scoreboard.blank_score.0,
+			invalid_score: scoreboard.invalid_score.0
+		}
+	}
+}
+
+#[derive(Serialize)]
+pub struct VotingMachineV1 {
+	voters: BTreeSet<String>,
+	scoreboard: ScoreboardV1
+}
+
+impl From<VotingMachine> for VotingMachineV1 {
+    fn from(machine: VotingMachine) -> Self {
+        Self {
+            voters: machine.get_voters().0.iter().map(|v| v.to_string()).collect(),
+            scoreboard: ScoreboardV1::from(machine.get_scoreboard().clone()),
+        }
+    }
 }

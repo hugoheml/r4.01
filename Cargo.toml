@@ -9,5 +9,5 @@ members = [
 	"v020_configuration", "v021_app_builder",
 	"v030_domain", "v040_memory", "v041_file",
 	"v050_use_cases", "v060_text_interfaces",
-	"v070_cli_services", "v080_html"
+	"v070_cli_services", "v080_html", "v090_json"
 ]

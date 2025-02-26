@@ -1,4 +1,4 @@
-use axum::Router;
+use axum::{routing::post, Router};
 use axum::routing::get;
 
 use crate::storage::Storage;
@@ -11,7 +11,7 @@ pub fn make_router<Store: Storage + Clone + Send + Sync + 'static>(
 ) -> Router {
 	Router::new()
 		.route(routes.index, get(html_handlers::get_index))
-		.route(routes.vote, get(html_handlers::vote))
+		.route(routes.vote, post(html_handlers::vote))
 		.route(routes.results, get(html_handlers::get_results))
 		.with_state(app_state)
 
